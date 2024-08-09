@@ -14,3 +14,4 @@ vite.config.ts.timestamp-*
 
 .wrangler
 /.wrangler
+package-lock.json
