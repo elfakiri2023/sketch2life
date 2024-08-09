@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte'
-	import { eventName, canvasSize, lines, imgUrl } from '$lib/stores/board'
+	import { tool, canvasSize, lines, imgUrl } from '$lib/stores/board'
 	import MenuItem from '$lib/components/ui/MenuItem.svelte'
 	import { goto } from '$app/navigation'
 	import { getModalStore } from '@skeletonlabs/skeleton'
@@ -25,21 +25,21 @@
 				name: 'Pen',
 				icon: 'pen',
 				action: () => {
-					$eventName = 'DRAW'
+					$tool = 'pen'
 				}
 			},
 			{
 				name: 'Eraser',
 				icon: 'eraser',
 				action: () => {
-					$eventName = 'ERASE'
+					$tool = 'eraser'
 				}
 			},
 			{
 				name: 'Grab',
 				icon: 'grab',
 				action: () => {
-					$eventName = 'GRAB'
+					$tool = 'grab'
 				}
 			},
 			{
@@ -98,7 +98,7 @@
 	}
 </script>
 
-<div class="flex h-screen">
+<div class="flex h-screen bg-black">
 	<div class="flex flex-col justify-between w-16 bg-surface-800">
 		<div>
 			<nav class="list-nav flex justify-center items-center">
@@ -132,13 +132,7 @@
 			</nav>
 		</div>
 	</div>
-	<div
-		class="flex-grow flex justify-center items-center xoverflow-hidden relative"
-		class:cursor-grab={$eventName === 'GRAB'}
-		class:cursor-crosshair={$eventName === 'DRAW'}
-		class:cursor-pointer={$eventName === 'ERASE'}
-		bind:this={containerRef}
-	>
+	<div class="flex-grow flex justify-center items-center xoverflow-hidden relative" class:cursor-grab={$tool === 'grab'} class:cursor-crosshair={$tool === 'pen'} class:cursor-pointer={$tool === 'eraser'} bind:this={containerRef}>
 		<svelte:component this={board} />
 	</div>
 </div>
