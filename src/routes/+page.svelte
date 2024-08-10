@@ -5,7 +5,7 @@
 	import MenuItem from '$lib/components/ui/MenuItem.svelte'
 	import { goto } from '$app/navigation'
 	import { getModalStore } from '@skeletonlabs/skeleton'
-	import { trimImage } from '$lib/shared/trimImage'
+	import Generate from '$lib/components/shared/Generate.svelte'
 
 	const modalStore = getModalStore()
 
@@ -68,23 +68,9 @@
 				icon: 'convert',
 				color: 'text-primary-500',
 				action: async () => {
-					const croppedBase64 = await trimImage($imgUrl)
-					const res = await fetch('/api/generate', {
-						method: 'POST',
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({ img: croppedBase64 })
-					})
-
-					const blob = await res.blob()
-					const data = URL.createObjectURL(blob)
-
 					modalStore.trigger({
-						type: 'alert',
-						/* 						title: 'Example Alert',
-						body: 'This is an example modal.', */
-						image: data
+						type: 'component',
+						component: { ref: Generate }
 					})
 				}
 			},
