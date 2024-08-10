@@ -4,8 +4,9 @@
 
 	let info = {
 		title: 'Sketch2life',
-		subTitle: '',
-		description: ''
+		subTitle: 'bring your imagination to life',
+		description:
+			'Unleash your creativity with Sketch2life! Turn your hand-drawn sketches into stunning, realistic images in just moments. Whether you’re a budding artist or simply love to doodle, Sketch2life makes it easy to bring your imagination to life. Start creating today!'
 	}
 
 	$: url = `${$page.url.protocol}//${$page.url.host}${$page.url.pathname}`

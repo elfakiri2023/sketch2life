@@ -1,6 +1,7 @@
 <script>
 	import { onMount } from 'svelte'
 	import { tool, canvasSize, lines, imgUrl } from '$lib/stores/board'
+	import { loggedIn } from '$lib/stores/general'
 	import MenuItem from '$lib/components/ui/MenuItem.svelte'
 	import { goto } from '$app/navigation'
 	import { getModalStore } from '@skeletonlabs/skeleton'
@@ -64,13 +65,10 @@
 		bottom: [
 			{
 				name: 'Generate',
-				icon: 'favorite',
-				color: 'text-yellow-500',
+				icon: 'convert',
+				color: 'text-primary-500',
 				action: async () => {
-					console.log($imgUrl)
-					console.log('------------------')
 					const croppedBase64 = await trimImage($imgUrl)
-					console.log(croppedBase64)
 					const res = await fetch('/api/generate', {
 						method: 'POST',
 						headers: {
@@ -89,15 +87,15 @@
 						image: data
 					})
 				}
-			}
-			/* {
-				name: 'Logout',
-				color: 'text-red-400',
-				icon: 'logout',
+			},
+			{
+				name: 'Favorite',
+				icon: 'favorite',
+				color: 'text-yellow-500',
 				action: () => {
-					alert('/logout')
+					alert('/favorite')
 				}
-			} */
+			}
 		]
 	}
 </script>
@@ -132,6 +130,11 @@
 							{/if}
 						</li>
 					{/each}
+					{#if $loggedIn === false}
+						<li>
+							<MenuItem name="Logout" icon="logout" color="text-red-400" action={() => console.log('xx')} />
+						</li>
+					{/if}
 				</ul>
 			</nav>
 		</div>

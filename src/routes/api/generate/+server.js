@@ -23,25 +23,14 @@ export const POST = async ({ request, locals }) => {
 		// @cf/unum/uform-gen2-qwen-500m
 		const captionRes = await locals.AI.run('@cf/llava-hf/llava-1.5-7b-hf', {
 			image: Array.from(dataURLToBuffer(img)),
-			prompt: 'Analyze and describe all the objects present in the given image. Focus on identifying individual elements, providing details about their appearance, position, and any notable features. Do not make assumptions about the context or background  unless explicitly visible. Keep the description objective and based solely on what is visible in the image.',
+			prompt: 'Given this black-and-white sketch, describe the objects, their arrangement, and any actions or scenes depicted. Include any important details that would help someone understand the image without seeing it. Do not add any information that is not directly visible in the image. The response should be detailed and descriptive, providing a clear picture of the scene.',
 			max_tokens: 512
 		})
 
 		const caption = captionRes.description.replaceAll('"', '').trim()
-		console.log('-- 1: start --')
+		console.log('-- 1: start: @cf/llava-hf/llava-1.5-7b-hf --')
 		console.log(caption)
 		console.log('-- 1: end --')
-
-		const captionRes_1 = await locals.AI.run('@cf/unum/uform-gen2-qwen-500m', {
-			image: Array.from(dataURLToBuffer(img)),
-			prompt: 'Analyze and describe all the objects present in the given image. Focus on identifying individual elements, providing details about their appearance, position, and any notable features. Do not make assumptions about the context or background  unless explicitly visible. Keep the description objective and based solely on what is visible in the image.',
-			max_tokens: 512
-		})
-
-		const caption_1 = captionRes_1.description.replaceAll('"', '').trim()
-		console.log('-- 2: start --')
-		console.log(caption_1)
-		console.log('-- 2: end --')
 
 		// @cf/meta/llama-3.1-8b-instruct
 		// @cf/meta/llama-2-7b-chat-fp16
@@ -49,19 +38,19 @@ export const POST = async ({ request, locals }) => {
 			messages: [
 				{
 					role: 'system',
-					content: 'You are an AI prompt engineer specialized in transforming rough sketches captions into images prompts.'
+					content: 'Ignore any background details in the following caption. Focus only on the objects and elements explicitly mentioned.'
 				},
 				{
 					role: 'user',
 					content: `Given a caption of a rough sketch, generate a prompt to generate a better detailed image for the sketch. Keep in mind that the caption's black and white color should be ignored and correct colors should be added to the image. The response should only contain the raw prompt.
             		Here is the caption for the rough sketch:
                     ${caption}`
+					/* content: `Using the following description, generate a prompt that can be used to create a photorealistic image with a Stable Diffusion model: ${caption}. The response should only contain the raw prompt` */
 				}
 			]
 		})
-
 		const prompt = promptRes.response.replaceAll('"', '').trim()
-		console.log('-- 2 start --')
+		console.log('-- 2 start: @cf/meta/llama-3.1-8b-instruct --')
 		console.log(prompt)
 		console.log('-- 2 end --')
 
