@@ -130,9 +130,13 @@
 							{/if}
 						</li>
 					{/each}
-					{#if $loggedIn === false}
+					{#if $loggedIn}
 						<li>
-							<MenuItem name="Logout" icon="logout" color="text-red-400" action={() => console.log('xx')} />
+							<MenuItem name="Logout" icon="logout" color="text-red-400" action={() => goto('/logout')} />
+						</li>
+					{:else}
+						<li>
+							<MenuItem name="Login" icon="login" color="text-surface-400" action={() => goto('/login')} />
 						</li>
 					{/if}
 				</ul>

@@ -56,12 +56,9 @@
 		/>
 	</svg>
 {:else if name === 'login'}
-	<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...$$props} transform="rotate(180 12 12)">
-		<path
-			fill="currentColor"
-			fill-rule="evenodd"
-			d="M11 2a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3zm1.293 6.293a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L13.586 13H5a1 1 0 1 1 0-2h8.586l-1.293-1.293a1 1 0 0 1 0-1.414"
-			clip-rule="evenodd"
-		/>
+	<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 36 36" {...$$restProps}>
+		<path fill={color} d="M28 4H12a2 2 0 0 0-2 2v7h8.5l-3.38-3.29a1 1 0 0 1 1.41-1.41l5.79 5.79l-5.79 5.79a1 1 0 0 1-1.41-1.41L18.5 15H10v15a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2" class="clr-i-solid clr-i-solid-path-1" />
+		<path fill={color} d="M10 13H4a1 1 0 0 0-1 1a1 1 0 0 0 1 1h6Z" class="clr-i-solid clr-i-solid-path-2" />
+		<path fill="none" d="M0 0h36v36H0z" />
 	</svg>
 {/if}
