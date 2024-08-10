@@ -4,6 +4,7 @@
 	import MenuItem from '$lib/components/ui/MenuItem.svelte'
 	import { goto } from '$app/navigation'
 	import { getModalStore } from '@skeletonlabs/skeleton'
+	import { trimImage } from '$lib/shared/trimImage'
 
 	const modalStore = getModalStore()
 
@@ -66,13 +67,16 @@
 				icon: 'favorite',
 				color: 'text-yellow-500',
 				action: async () => {
-					console.log(JSON.stringify($lines))
+					console.log($imgUrl)
+					console.log('------------------')
+					const croppedBase64 = await trimImage($imgUrl)
+					console.log(croppedBase64)
 					const res = await fetch('/api/generate', {
 						method: 'POST',
 						headers: {
 							'Content-Type': 'application/json'
 						},
-						body: JSON.stringify({ img: $imgUrl })
+						body: JSON.stringify({ img: croppedBase64 })
 					})
 
 					const blob = await res.blob()

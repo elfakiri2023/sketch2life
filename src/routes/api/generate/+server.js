@@ -43,12 +43,6 @@ export const POST = async ({ request, locals }) => {
 		console.log(caption_1)
 		console.log('-- 2: end --')
 
-		return new Response(JSON.stringify({ caption }), {
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-
 		// @cf/meta/llama-3.1-8b-instruct
 		// @cf/meta/llama-2-7b-chat-fp16
 		const promptRes = await locals.AI.run('@cf/meta/llama-3.1-8b-instruct', {

@@ -124,8 +124,10 @@
 		return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 	}
 
-	$: if (ref) {
-		generatePreview(ref)
+	$: if (ref && $lines.length > 0) {
+		setTimeout(() => {
+			generatePreview(ref)
+		}, 1000)
 	}
 </script>
 
