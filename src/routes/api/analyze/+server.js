@@ -17,6 +17,8 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	try {
+		// @cf/meta/llama-3.1-8b-instruct
+		// @cf/meta/llama-2-7b-chat-fp16
 		const captionRes = await locals.AI.run('@cf/llava-hf/llava-1.5-7b-hf', {
 			image: Array.from(dataURLToBuffer(img)),
 			prompt: 'Given this black-and-white sketch, describe the objects, their arrangement, and any actions or scenes depicted. Include any important details that would help someone understand the image without seeing it. Do not add any information that is not directly visible in the image. The response should be detailed and descriptive, providing a clear picture of the scene.',

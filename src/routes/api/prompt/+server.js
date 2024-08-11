@@ -11,6 +11,8 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	try {
+		// @cf/llava-hf/llava-1.5-7b-hf
+		// @cf/unum/uform-gen2-qwen-500m
 		const promptRes = await locals.AI.run('@cf/meta/llama-3.1-8b-instruct', {
 			messages: [
 				{

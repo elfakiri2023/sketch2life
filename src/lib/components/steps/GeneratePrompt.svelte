@@ -33,7 +33,7 @@
 	}
 </script>
 
-<header class="text-2xl font-bold">Generating the prompt</header>
+<header class="text-2xl font-bold">Generating the prompt (2/3)</header>
 {#if loading}
 	<section class="card w-full animate-pulse">
 		<div class="p-4 space-y-4">
