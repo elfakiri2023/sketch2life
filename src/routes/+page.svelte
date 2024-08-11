@@ -75,8 +75,8 @@
 				}
 			},
 			{
-				name: 'Favorite',
-				icon: 'favorite',
+				name: 'Bookmarks',
+				icon: 'bookmark',
 				color: 'text-yellow-500',
 				action: () => {
 					alert('/favorite')
