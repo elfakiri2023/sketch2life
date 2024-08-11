@@ -80,7 +80,7 @@
 				color: 'text-yellow-500',
 				action: () => {
 					if ($loggedIn) {
-						alert('/logged in')
+						goto('/bookmarks')
 					} else {
 						needLogin()
 					}
@@ -137,7 +137,15 @@
 					{/each}
 					{#if $loggedIn}
 						<li>
-							<MenuItem name="Logout" icon="logout" color="text-red-400" action={() => goto('/logout')} />
+							<MenuItem
+								name="Logout"
+								icon="logout"
+								color="text-red-400"
+								action={() => {
+									$loggedIn = false
+									goto('/logout')
+								}}
+							/>
 						</li>
 					{:else}
 						<li>

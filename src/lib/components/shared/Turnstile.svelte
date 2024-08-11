@@ -15,7 +15,7 @@
 	}
 
 	function turnstileCallback() {
-		turnstileLoaded.set(true)
+		$turnstileLoaded = true
 	}
 
 	let mounted = false

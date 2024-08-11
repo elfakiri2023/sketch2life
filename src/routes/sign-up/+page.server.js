@@ -1,10 +1,8 @@
 import { fail, redirect } from '@sveltejs/kit'
-import { generateId } from 'lucia'
-import { userTable, socialTable } from '$lib/server/db/schema'
+import { userTable } from '$lib/server/db/schema'
 import { validateCaptcha } from '$lib/server/captcha'
 import { createPasswordHash } from '$lib/server/password-hasher'
 import { z } from 'zod'
-import { loggedIn } from '$lib/stores/general'
 
 export const load = async ({ locals }) => {
 	if (locals.user) return redirect(302, `/`)
@@ -45,17 +43,18 @@ export const actions = {
 		}
 
 		const hashedPassword = await createPasswordHash(password)
-		const userId = generateId(15)
 
 		try {
-			await locals.DB.insert(userTable).values({
-				id: userId,
-				username,
-				password: hashedPassword,
-				email
-			})
+			const result = await locals.DB.insert(userTable)
+				.values({
+					username,
+					password: hashedPassword,
+					email
+				})
+				.returning({ insertedId: userTable.id })
 
 			const lucia = locals.lucia
+			const userId = result[0].insertedId
 
 			const session = await lucia.createSession(userId, {})
 			const sessionCookie = lucia.createSessionCookie(session.id)

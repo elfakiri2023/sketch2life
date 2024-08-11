@@ -55,7 +55,7 @@
 				<button class="btn {parent.buttonPositive}" on:click={nextStep}>Generate</button>
 			{:else if $currentStep === 4}
 				<button type="button" class="btn variant-filled">
-					<span><CanvasIcons name="bookmark" class="text-warning-500" /></span>
+					<span><CanvasIcons name="bookmark" class="text-warning-500" on:click={downloadImage} /></span>
 					<span>Bookmark</span>
 				</button>
 				<button type="button" class="btn variant-filled" on:click={downloadImage}>

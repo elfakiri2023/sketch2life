@@ -2,6 +2,8 @@ import { fail, redirect } from '@sveltejs/kit'
 import { eq } from 'drizzle-orm'
 import { userTable } from '$lib/server/db/schema'
 import { verifyPasswordHash } from '$lib/server/password-hasher'
+import { validateCaptcha } from '$lib/server/captcha'
+import { z } from 'zod'
 
 export const load = async ({ locals }) => {
 	if (locals.user) return redirect(302, `/`)
@@ -13,16 +15,33 @@ export const actions = {
 		const formData = await request.formData()
 		const username = formData.get('username')
 		const password = formData.get('password')
+		const captchaToken = formData.get('cf-turnstile-response')
+		const ip = request.headers.get('CF-Connecting-IP') ?? ''
 
-		// TODO: use Zod
-		if (typeof username !== 'string' || username.length < 3 || username.length > 31 || !/^[a-z0-9_-]+$/.test(username)) {
+		const schema = z.object({
+			username: z
+				.string()
+				.min(3, { message: 'Username must be at least 3 characters' })
+				.max(32, { message: 'Username must be at most 32 characters' })
+				.regex(/^[a-z0-9_-]+$/, { message: 'Invalid username' }),
+			password: z.string().min(6, { message: 'Password must be at least 6 characters' }).max(255, { message: 'Password must be at most 255 characters' }),
+			captchaToken: z.string().min(1, { message: 'Captcha Token must not be empty' })
+		})
+
+		try {
+			schema.parse({ username, password, captchaToken })
+		} catch (error) {
 			return fail(400, {
-				message: 'Invalid username'
+				// @ts-ignore
+				message: error.errors[0]?.message
 			})
 		}
-		if (typeof password !== 'string' || password.length < 6 || password.length > 255) {
+
+		const outcome = await validateCaptcha(ip, captchaToken)
+
+		if (!outcome.success) {
 			return fail(400, {
-				message: 'Invalid password'
+				message: 'Error with captcha, please try again.'
 			})
 		}
 
