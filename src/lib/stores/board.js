@@ -1,7 +1,6 @@
 import { writable } from 'svelte/store'
 
 export const imgUrl = writable('')
-export const currentStep = writable(1)
 export const ref = writable(null)
 export const isDrawing = writable(false)
 export const tool = writable('pen')

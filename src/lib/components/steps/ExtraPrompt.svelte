@@ -1,5 +1,6 @@
 <script>
 	import { imgUrl } from '$lib/stores/board'
+	import { userPrompt } from '$lib/stores/generate'
 </script>
 
 <header class="text-2xl font-bold">Generate image</header>
@@ -9,6 +10,6 @@
 	</div>
 
 	<div class="w-full md:w-1/2 flex">
-		<textarea class="w-full h-full textarea resize-none" placeholder="(Optional) Specify any further details to include in the image."></textarea>
+		<textarea bind:value={$userPrompt} class="w-full h-full textarea resize-none" placeholder="(Optional) Specify any further details to include in the image."></textarea>
 	</div>
 </div>

@@ -1,29 +1,26 @@
 <script>
 	import { onMount } from 'svelte'
-	import { imgUrl } from '$lib/stores/board'
-	import { currentStep, caption } from '$lib/stores/generate'
-	import { trimImage } from '$lib/shared/trimImage.js'
+	import { caption, currentStep, prompt, userPrompt } from '$lib/stores/generate'
 	import Typewriter from 'svelte-typewriter'
 
 	let loading = true
 
 	onMount(async () => {
 		try {
-			const croppedBase64 = await trimImage($imgUrl)
-			const res = await fetch('/api/analyze', {
+			const res = await fetch('/api/prompt', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ img: croppedBase64 })
+				body: JSON.stringify({ caption: $caption, userPrompt: $userPrompt })
 			})
 
 			const data = await res.json()
-			if (data.caption) {
-				$caption = data.caption
+			if (data.prompt) {
+				$prompt = data.prompt
 			}
 		} catch (error) {
-			console.error('Error generating image:', error)
+			console.error('Error generating prompt:', error)
 		} finally {
 			loading = false
 		}
@@ -36,7 +33,7 @@
 	}
 </script>
 
-<header class="text-2xl font-bold">Analyzing the image</header>
+<header class="text-2xl font-bold">Generating the prompt</header>
 {#if loading}
 	<section class="card w-full animate-pulse">
 		<div class="p-4 space-y-4">
@@ -52,7 +49,7 @@
 	<section class="card w-full">
 		<div class="p-4">
 			<Typewriter cursor={false} on:done={nextStep}>
-				<p>{$caption}</p>
+				<p>{$prompt}</p>
 			</Typewriter>
 		</div>
 	</section>
