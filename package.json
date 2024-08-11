@@ -50,6 +50,7 @@
     "drizzle-orm": "^0.33.0",
     "konva": "^9.3.14",
     "svelte-konva": "^0.3.1",
+    "svelte-typewriter": "^3.2.3",
     "wrangler": "^3.60.2"
   }
 }
