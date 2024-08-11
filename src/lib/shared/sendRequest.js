@@ -4,7 +4,7 @@
  * @param {string|object} value
  * @returns {Promise<import('@skeletonlabs/skeleton').ToastSettings|Object>}
  */
-export async function sendRequest(key, value, endpoint = 'update') {
+export async function sendRequest(obj, endpoint) {
 	let response = { success: false, message: 'Something went wrong!' }
 
 	const request = await fetch(`/api/${endpoint}`, {
@@ -12,10 +12,7 @@ export async function sendRequest(key, value, endpoint = 'update') {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({
-			key: key,
-			value: value
-		})
+		body: JSON.stringify(obj)
 	})
 
 	if (!request.ok) {
@@ -37,10 +34,6 @@ export async function sendRequest(key, value, endpoint = 'update') {
 	const toast = {
 		message: response.message,
 		background: response.success ? 'variant-filled-primary' : 'variant-filled-warning'
-	}
-
-	if (data.data && Object.keys(data.data).length > 0) {
-		return { responseData: data.data, toast }
 	}
 
 	return toast

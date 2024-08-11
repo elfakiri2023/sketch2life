@@ -36,7 +36,7 @@
 	}
 </script>
 
-<header class="text-2xl font-bold">Analyzing the image (1/3)</header>
+<header class="text-2xl font-bold">Analyzing the sketch (1/3)</header>
 {#if loading}
 	<section class="card w-full animate-pulse">
 		<div class="p-4 space-y-4">
