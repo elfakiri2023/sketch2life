@@ -10,6 +10,6 @@
 	</div>
 
 	<div class="w-full md:w-1/2 flex">
-		<textarea bind:value={$userPrompt} class="w-full h-full textarea resize-none" placeholder="(Optional) Specify any further details to include in the image."></textarea>
+		<textarea bind:value={$userPrompt} class="w-full h-full textarea resize-none" placeholder="(Optional) Specify any further details to include in the generated image."></textarea>
 	</div>
 </div>
