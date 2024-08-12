@@ -104,7 +104,7 @@
 		}
 	}
 
-	function stopPinchZoom() {
+	function stopPinchZoom(e) {
 		lastDistance = 0
 		lastDistance = null
 	}
@@ -141,7 +141,7 @@
 		}}
 		on:touchend={(e) => {
 			stopDraw(e)
-			stopPinchZoom()
+			stopPinchZoom(e)
 		}}
 		config={{
 			draggable: $tool === 'grab',

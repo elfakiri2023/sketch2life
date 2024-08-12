@@ -34,5 +34,5 @@
 </svelte:head>
 
 {#if mounted && $turnstileLoaded}
-	<div id="cf-turnstile" class="mb-4" data-test={PUBLIC_TURNSTILE_SITE_KEY}></div>
+	<div id="cf-turnstile" class="mb-4"></div>
 {/if}
