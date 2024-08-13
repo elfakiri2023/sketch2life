@@ -1,5 +1,6 @@
 <script>
 	import { imgUrl } from '$lib/stores/board'
+	import { loggedIn } from '$lib/stores/general'
 	import { currentStep, generatedImg, prompt, caption } from '$lib/stores/generate'
 	import ExtraPrompt from '$lib/components/steps/ExtraPrompt.svelte'
 	import AnalyzeImage from '$lib/components/steps/AnalyzeImage.svelte'
@@ -37,6 +38,10 @@
 		document.body.removeChild(link)
 		URL.revokeObjectURL(link.href)
 	}
+
+	function addToBookmarks() {
+		console.log('added')
+	}
 </script>
 
 <div class="card p-4 w-modal max-w-[900px] shadow-xl space-y-4">
@@ -54,10 +59,12 @@
 			{#if $currentStep === 1}
 				<button class="btn {parent.buttonPositive}" on:click={nextStep}>Generate</button>
 			{:else if $currentStep === 4}
-				<button type="button" class="btn variant-filled">
-					<span><CanvasIcons name="bookmark" class="text-warning-500" on:click={downloadImage} /></span>
-					<span>Bookmark</span>
-				</button>
+				{#if $loggedIn}
+					<button type="button" class="btn variant-filled" on:click={addToBookmarks}>
+						<span><CanvasIcons name="bookmark" class="text-warning-500" /></span>
+						<span>Bookmark</span>
+					</button>
+				{/if}
 				<button type="button" class="btn variant-filled" on:click={downloadImage}>
 					<span><CanvasIcons name="download" class="text-error-800" /></span>
 					<span>Download</span>

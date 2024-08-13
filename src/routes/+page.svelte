@@ -68,10 +68,18 @@
 				icon: 'convert',
 				color: 'text-primary-500',
 				action: async () => {
-					modalStore.trigger({
-						type: 'component',
-						component: { ref: Generate }
-					})
+					if ($lines.length > 0) {
+						modalStore.trigger({
+							type: 'component',
+							component: { ref: Generate }
+						})
+					} else {
+						modalStore.trigger({
+							type: 'alert',
+							title: 'There is nothing to generate',
+							body: 'The sketch is empty. Please draw something before generating.'
+						})
+					}
 				}
 			},
 			{
