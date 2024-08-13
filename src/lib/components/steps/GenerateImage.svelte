@@ -1,11 +1,12 @@
 <script>
 	import { onMount } from 'svelte'
-	import { currentStep, prompt, generatedImg } from '$lib/stores/generate'
+	import { prompt, generatedImg } from '$lib/stores/generate'
 
 	let loading = true
 
 	export async function generateImage() {
 		try {
+			$generatedImg = ''
 			loading = true
 			const res = await fetch('/api/generate', {
 				method: 'POST',

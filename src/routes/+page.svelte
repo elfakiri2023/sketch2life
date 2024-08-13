@@ -6,9 +6,7 @@
 	import { goto } from '$app/navigation'
 	import { getModalStore } from '@skeletonlabs/skeleton'
 	import Generate from '$lib/components/shared/Generate.svelte'
-	import { getToastStore } from '@skeletonlabs/skeleton'
 
-	const toastStore = getToastStore()
 	const modalStore = getModalStore()
 
 	let containerRef = null
@@ -73,8 +71,7 @@
 					if ($lines.length > 0) {
 						modalStore.trigger({
 							type: 'component',
-							component: { ref: Generate },
-							background: 'bg-primary-50'
+							component: { ref: Generate }
 						})
 					} else {
 						modalStore.trigger({

@@ -4,7 +4,7 @@
  * @param {string|object} value
  * @returns {Promise<import('@skeletonlabs/skeleton').ToastSettings|Object>}
  */
-export async function sendRequest(obj, endpoint, isBlob = false) {
+export async function sendRequest(endpoint, obj) {
 	let response = { success: false, message: 'Something went wrong!' }
 
 	const request = await fetch(`/api/${endpoint}`, {
@@ -17,6 +17,7 @@ export async function sendRequest(obj, endpoint, isBlob = false) {
 
 	if (!request.ok) {
 		response.message = 'Oops! Something went wrong. Please try again later.'
+		return response
 	}
 
 	const data = await request.json()
@@ -32,7 +33,7 @@ export async function sendRequest(obj, endpoint, isBlob = false) {
 	response.message = data.message
 
 	const toast = {
-		data: data.data,
+		data: data.data || {},
 		message: response.message,
 		background: response.success ? 'variant-filled-primary' : 'variant-filled-warning'
 	}

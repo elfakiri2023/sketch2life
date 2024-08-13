@@ -2,15 +2,19 @@
 	import { imgUrl } from '$lib/stores/board'
 	import { loggedIn } from '$lib/stores/general'
 	import { currentStep, generatedImg, prompt, caption } from '$lib/stores/generate'
+	import { lines } from '$lib/stores/board'
 	import ExtraPrompt from '$lib/components/steps/ExtraPrompt.svelte'
 	import AnalyzeImage from '$lib/components/steps/AnalyzeImage.svelte'
 	import GeneratePrompt from '$lib/components/steps/GeneratePrompt.svelte'
 	import GenerateImage from '$lib/components/steps/GenerateImage.svelte'
 	import CanvasIcons from '$lib/components/icons/CanvasIcons.svelte'
 	import { getToastStore } from '@skeletonlabs/skeleton'
+	import { sendRequest } from '$lib/shared/sendRequest'
 
 	export let parent
 	let regenerate
+	let saveText = 'Save'
+	let canDownload = true
 
 	const toastStore = getToastStore()
 
@@ -28,6 +32,11 @@
 	}
 
 	function downloadImage() {
+		canDownload = false
+		setTimeout(() => {
+			canDownload = true
+		}, 2000)
+
 		const link = document.createElement('a')
 		link.href = $generatedImg
 
@@ -42,12 +51,40 @@
 		URL.revokeObjectURL(link.href)
 	}
 
-	function addToBookmarks() {
-		toastStore.trigger({
-			message: 'Images saved to bookmarks',
-			background: 'variant-filled-primary',
-			zIndex: 10000
-		})
+	async function addToBookmarks() {
+		saveText = 'Saving...'
+		try {
+			const data = await sendRequest('save', {
+				lines: $lines,
+				image: $generatedImg
+			})
+
+			console.log('lines')
+			console.log($lines)
+			console.log('image')
+			console.log($imgUrl)
+
+			if (data.success) {
+				toastStore.trigger({
+					message: 'Sketch & Image saved to bookmarks',
+					background: 'variant-filled-primary'
+				})
+				saveText = 'Saved'
+			} else {
+				toastStore.trigger({
+					message: 'Failed to save Sketch & Image to bookmarks',
+					background: 'variant-filled-error'
+				})
+				saveText = 'Save'
+			}
+		} catch (error) {
+			console.error('Error saving image:', error)
+		}
+	}
+
+	function regenerateImage() {
+		regenerate()
+		saveText = 'Save'
 	}
 </script>
 
@@ -67,16 +104,16 @@
 				<button class="btn {parent.buttonPositive}" on:click={nextStep}>Generate</button>
 			{:else if $currentStep === 4}
 				{#if $loggedIn}
-					<button type="button" class="btn variant-filled" on:click={addToBookmarks}>
+					<button type="button" class="btn variant-filled" disabled={saveText !== 'Save' || $generatedImg === '' || $lines.length === 0} on:click={addToBookmarks}>
 						<span><CanvasIcons name="bookmark" class="text-warning-500" /></span>
-						<span>Save</span>
+						<span>{saveText}</span>
 					</button>
 				{/if}
-				<button type="button" class="btn variant-filled" on:click={downloadImage}>
+				<button type="button" class="btn variant-filled" disabled={!canDownload || $generatedImg === '' || $lines.length === 0} on:click={downloadImage}>
 					<span><CanvasIcons name="download" class="text-error-800" /></span>
 					<span>Download</span>
 				</button>
-				<button type="button" class="btn variant-filled" on:click={regenerate}>
+				<button type="button" class="btn variant-filled" on:click={regenerateImage}>
 					<span><CanvasIcons name="regenerate" class="text-surface-700" /></span>
 					<span>Re-Generate</span>
 				</button>

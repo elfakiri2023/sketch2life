@@ -1,16 +1,8 @@
 <script>
 	import Navbar from '$lib/components/ui/Navbar.svelte'
 	import GeneralIcons from '$lib/components/icons/GeneralIcons.svelte'
-	import { getToastStore } from '@skeletonlabs/skeleton'
 
-	const toastStore = getToastStore()
-
-	function test() {
-		toastStore.trigger({
-			message: 'This message will have a colorful background.',
-			background: 'variant-filled-primary'
-		})
-	}
+	function test() {}
 </script>
 
 <Navbar />
