@@ -12,10 +12,10 @@
 
 <ul {...$$restProps}>
 	{#if $loggedIn === false}
-		<a href="/login" class={isMobile ? `flex w-full justify-center my-2 btn btn-sm variant-primary` : `btn btn-sm variant-primary`}>Sign in</a>
-		<a href="/sign-up" class={isMobile ? `flex w-full justify-center my-2 btn btn-sm variant-filled-primary` : `btn btn-sm variant-filled-primary`}>Sign up</a>
+		<a href="/login" class={isMobile ? `flex w-full justify-center my-2 btn variant-primary` : `btn variant-primary`}>Sign in</a>
+		<a href="/sign-up" class={isMobile ? `flex w-full justify-center my-2 btn variant-filled-primary` : `btn variant-filled-primary`}>Sign up</a>
 	{:else}
-		<a href="/bookmarks" class={isMobile ? `flex w-full justify-center my-2 btn btn-sm variant-primary` : `btn btn-sm variant-primary`}>Bookmarks</a>
-		<button type="button" on:click={logout} class={isMobile ? `flex w-full justify-center my-2 btn btn-sm variant-filled-primary` : `btn btn-sm variant-filled-primary`}>Log out</button>
+		<a href="/" class={isMobile ? `flex w-full justify-center my-2 btn variant-filled-primary` : `btn variant-filled-primary`}>Create</a>
+		<button type="button" on:click={logout} class={isMobile ? `flex w-full justify-center my-2 btn variant-primary` : `btn variant-primary`}>Log out</button>
 	{/if}
 </ul>
