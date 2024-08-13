@@ -71,7 +71,8 @@
 					if ($lines.length > 0) {
 						modalStore.trigger({
 							type: 'component',
-							component: { ref: Generate }
+							component: { ref: Generate },
+							zIndex: '999'
 						})
 					} else {
 						modalStore.trigger({

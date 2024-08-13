@@ -7,9 +7,12 @@
 	import GeneratePrompt from '$lib/components/steps/GeneratePrompt.svelte'
 	import GenerateImage from '$lib/components/steps/GenerateImage.svelte'
 	import CanvasIcons from '$lib/components/icons/CanvasIcons.svelte'
+	import { getToastStore } from '@skeletonlabs/skeleton'
 
 	export let parent
 	let regenerate
+
+	const toastStore = getToastStore()
 
 	function nextStep() {
 		$currentStep += 1
@@ -40,7 +43,12 @@
 	}
 
 	function addToBookmarks() {
-		console.log('added')
+		toastStore.trigger({
+			message: 'This message will have a colorful background.',
+			background: 'variant-filled-warning',
+			zIndex: '1',
+			position: 'items-end'
+		})
 	}
 </script>
 
@@ -62,7 +70,7 @@
 				{#if $loggedIn}
 					<button type="button" class="btn variant-filled" on:click={addToBookmarks}>
 						<span><CanvasIcons name="bookmark" class="text-warning-500" /></span>
-						<span>Bookmark</span>
+						<span>Save</span>
 					</button>
 				{/if}
 				<button type="button" class="btn variant-filled" on:click={downloadImage}>

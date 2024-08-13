@@ -4,7 +4,7 @@
 </script>
 
 <Navbar />
-<div class="border-t-2 border-gray-200" />
+<div class="border-t-2 border-gray-200/50" />
 
 <div class="container mx-auto px-10 my-10">
 	<section class="grid grid-cols-2 md:grid-cols-4 gap-7">
