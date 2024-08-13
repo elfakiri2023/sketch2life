@@ -44,10 +44,9 @@
 
 	function addToBookmarks() {
 		toastStore.trigger({
-			message: 'This message will have a colorful background.',
-			background: 'variant-filled-warning',
-			zIndex: '1',
-			position: 'items-end'
+			message: 'Images saved to bookmarks',
+			background: 'variant-filled-primary',
+			zIndex: 10000
 		})
 	}
 </script>
@@ -77,7 +76,7 @@
 					<span><CanvasIcons name="download" class="text-error-800" /></span>
 					<span>Download</span>
 				</button>
-				<button type="button" class="btn variant-filled" on:click={() => {regenerate()}}>
+				<button type="button" class="btn variant-filled" on:click={regenerate}>
 					<span><CanvasIcons name="regenerate" class="text-surface-700" /></span>
 					<span>Re-Generate</span>
 				</button>

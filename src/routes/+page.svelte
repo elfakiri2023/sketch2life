@@ -6,7 +6,9 @@
 	import { goto } from '$app/navigation'
 	import { getModalStore } from '@skeletonlabs/skeleton'
 	import Generate from '$lib/components/shared/Generate.svelte'
+	import { getToastStore } from '@skeletonlabs/skeleton'
 
+	const toastStore = getToastStore()
 	const modalStore = getModalStore()
 
 	let containerRef = null
@@ -72,7 +74,7 @@
 						modalStore.trigger({
 							type: 'component',
 							component: { ref: Generate },
-							zIndex: '999'
+							background: 'bg-primary-50'
 						})
 					} else {
 						modalStore.trigger({
@@ -165,7 +167,7 @@
 			</nav>
 		</div>
 	</div>
-	<div class="flex-grow flex justify-center items-center xoverflow-hidden relative" class:cursor-grab={$tool === 'grab'} class:cursor-crosshair={$tool === 'pen'} class:cursor-pointer={$tool === 'eraser'} bind:this={containerRef}>
+	<div class="flex-grow flex justify-center items-center overflow-hidden" class:cursor-grab={$tool === 'grab'} class:cursor-crosshair={$tool === 'pen'} class:cursor-pointer={$tool === 'eraser'} bind:this={containerRef}>
 		<svelte:component this={board} />
 	</div>
 </div>

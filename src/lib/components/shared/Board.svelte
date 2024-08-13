@@ -156,7 +156,7 @@
 	}
 </script>
 
-<div class="relative w-full h-full bg-black">
+<div class="w-full h-full bg-black">
 	<Stage
 		bind:handle={ref}
 		on:touchstart={initDraw}

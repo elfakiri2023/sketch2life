@@ -21,7 +21,7 @@
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow })
 </script>
 
-<Toast />
+<Toast zIndex="10000" position="tr" />
 <Modal />
 <Head />
 <main class="grow">
