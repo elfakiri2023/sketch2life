@@ -1,9 +1,9 @@
 import { json } from '@sveltejs/kit'
 
 export const POST = async ({ request, locals }) => {
-	const { caption } = await request.json()
+	const { caption, userPrompt } = await request.json()
 
-	if (!caption) {
+	if (!caption || !userPrompt) {
 		return json({ status: 'error', message: 'Bad Request' }, { status: 400 })
 	}
 

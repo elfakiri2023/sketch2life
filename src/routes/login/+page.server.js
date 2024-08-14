@@ -25,7 +25,7 @@ export const actions = {
 				.max(32, { message: 'Username must be at most 32 characters' })
 				.regex(/^[a-z0-9_-]+$/, { message: 'Invalid username' }),
 			password: z.string().min(6, { message: 'Password must be at least 6 characters' }).max(255, { message: 'Password must be at most 255 characters' }),
-			captchaToken: z.string().min(1, { message: 'Captcha Token must not be empty' })
+			captchaToken: z.string({ message: 'Please complete the Captcha' }).min(1, { message: 'Captcha Token must not be empty' })
 		})
 
 		try {

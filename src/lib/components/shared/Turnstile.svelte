@@ -7,7 +7,7 @@
 	export async function render() {
 		const widgetId = turnstile.render('#cf-turnstile', {
 			sitekey: PUBLIC_TURNSTILE_SITE_KEY,
-			callback: function () {
+			callback: function (token) {
 				document.getElementById('submit')?.click()
 				setTimeout(() => {
 					turnstile.remove(widgetId)
@@ -35,5 +35,5 @@
 </svelte:head>
 
 {#if $turnstileMounted && $turnstileLoaded}
-	<div id="cf-turnstile" class="mb-4"></div>
+	<div id="cf-turnstile" class="mb-4" data-sitekey={PUBLIC_TURNSTILE_SITE_KEY}></div>
 {/if}
