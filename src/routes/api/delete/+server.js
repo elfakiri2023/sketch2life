@@ -13,7 +13,7 @@ export const POST = async ({ request, locals }) => {
 	}
 
 	try {
-		const object = await locals.bucket.get(bane)
+		const object = await locals.bucket.get(name)
 		if (object) {
 			await locals.bucket.delete(name)
 		}
