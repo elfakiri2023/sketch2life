@@ -1,7 +1,7 @@
 <script>
 	import { browser } from '$app/environment'
 	import { onMount } from 'svelte'
-	import { turnstileLoaded } from '$lib/stores/general'
+	import { turnstileLoaded, turnstileMounted } from '$lib/stores/general'
 	import { PUBLIC_TURNSTILE_SITE_KEY } from '$env/static/public'
 
 	export async function render() {
@@ -9,7 +9,9 @@
 			sitekey: PUBLIC_TURNSTILE_SITE_KEY,
 			callback: function () {
 				document.getElementById('submit')?.click()
-				turnstile.remove(widgetId)
+				setTimeout(() => {
+					turnstile.remove(widgetId)
+				}, 1000)
 			}
 		})
 	}
@@ -18,11 +20,10 @@
 		$turnstileLoaded = true
 	}
 
-	let mounted = false
 	onMount(() => {
-		mounted = true
+		$turnstileMounted = true
 		return () => {
-			mounted = false
+			$turnstileMounted = false
 		}
 	})
 </script>
@@ -33,6 +34,6 @@
 	{/if}
 </svelte:head>
 
-{#if mounted && $turnstileLoaded}
+{#if $turnstileMounted && $turnstileLoaded}
 	<div id="cf-turnstile" class="mb-4"></div>
 {/if}

@@ -7,14 +7,17 @@
 	import { loggedIn, user } from '$lib/stores/general'
 	import Head from '$lib/components/shared/Head.svelte'
 	import { beforeNavigate } from '$app/navigation'
-	import { mobileNavOpen } from '$lib/stores/general'
+	import { mobileNavOpen, turnstileMounted } from '$lib/stores/general'
 
-	beforeNavigate(() => mobileNavOpen.set(false))
+	beforeNavigate(() => {
+		$mobileNavOpen = false
+		$turnstileMounted = false
+	})
 
 	export let data
 
-	$: loggedIn.set(data.loggedIn)
-	$: user.set(data.user)
+	$: $loggedIn = data.loggedIn
+	$: $user = data.user
 
 	initializeStores()
 
