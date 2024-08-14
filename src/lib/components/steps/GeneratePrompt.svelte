@@ -2,22 +2,24 @@
 	import { onMount } from 'svelte'
 	import { caption, currentStep, prompt, userPrompt } from '$lib/stores/generate'
 	import Typewriter from 'svelte-typewriter'
+	import { getToastStore } from '@skeletonlabs/skeleton'
+	import { sendRequest } from '$lib/shared/sendRequest'
+
+	const toastStore = getToastStore()
 
 	let loading = true
 
 	onMount(async () => {
 		try {
-			const res = await fetch('/api/prompt', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ caption: $caption, userPrompt: $userPrompt })
+			const request = await sendRequest('prompt', {
+				caption: $caption,
+				userPrompt: $userPrompt
 			})
 
-			const data = await res.json()
-			if (data.prompt) {
-				$prompt = data.prompt
+			if (request.ok) {
+				$prompt = request.data.prompt
+			} else {
+				toastStore.trigger(request)
 			}
 		} catch (error) {
 			console.error('Error generating prompt:', error)

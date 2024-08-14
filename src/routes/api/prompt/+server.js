@@ -27,7 +27,7 @@ export const POST = async ({ request, locals }) => {
 
 		const prompt = promptRes.response.replaceAll('"', '').trim()
 
-		return json({ prompt })
+		return json({ status: 'success', message: 'Prompt generated successfully', prompt })
 	} catch (error) {
 		console.error(error)
 		return json({ status: 'error', message: 'Internal Server Error' }, { status: 500 })

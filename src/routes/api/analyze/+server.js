@@ -19,7 +19,7 @@ export const POST = async ({ request, locals }) => {
 
 		const caption = captionRes.description.replaceAll('"', '').trim()
 
-		return json({ caption })
+		return json({ status: 'success', message: 'Sketch analyzed successfully', caption })
 	} catch (error) {
 		console.error(error)
 		return json({ status: 'error', message: 'Internal Server Error' }, { status: 500 })

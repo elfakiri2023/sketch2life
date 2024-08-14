@@ -4,23 +4,24 @@
 	import { currentStep, caption } from '$lib/stores/generate'
 	import { trimImage } from '$lib/shared/trimImage.js'
 	import Typewriter from 'svelte-typewriter'
+	import { sendRequest } from '$lib/shared/sendRequest'
+	import { getToastStore } from '@skeletonlabs/skeleton'
+
+	const toastStore = getToastStore()
 
 	let loading = true
 
 	onMount(async () => {
 		try {
 			const croppedBase64 = await trimImage($imgUrl)
-			const res = await fetch('/api/analyze', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ img: croppedBase64 })
+			const request = await sendRequest('analyze', {
+				img: croppedBase64
 			})
 
-			const data = await res.json()
-			if (data.caption) {
-				$caption = data.caption
+			if (request.ok) {
+				$caption = request.data.caption
+			} else {
+				toastStore.trigger(request)
 			}
 		} catch (error) {
 			console.error('Error generating image:', error)
