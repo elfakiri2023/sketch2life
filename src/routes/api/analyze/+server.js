@@ -1,8 +1,4 @@
-const dataURLToBuffer = (dataURL) => {
-	const base64 = dataURL.split(',')[1]
-	const binaryString = atob(base64)
-	return Uint8Array.from(binaryString, (c) => c.charCodeAt(0))
-}
+import { dataURLToBuffer } from '$lib/server/utils'
 
 export const POST = async ({ request, locals }) => {
 	const { img } = await request.json()

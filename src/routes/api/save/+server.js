@@ -1,40 +1,29 @@
-const dataURLToBuffer = (dataURL) => {
-	const base64 = dataURL.split(',')[1]
-	const binaryString = atob(base64)
-	return Uint8Array.from(binaryString, (c) => c.charCodeAt(0))
-}
+import { dataURLToBuffer, slugifyString } from '$lib/server/utils'
+import { json } from '@sveltejs/kit'
 
 export const POST = async ({ request, locals }) => {
 	const { image, lines } = await request.json()
 
-	console.log('image', image)
-	console.log('lines', lines)
+	if (!locals.user || !locals.user.id) {
+		return json({ status: 'error', message: 'You are not logged in' }, { status: 401 })
+	}
 
 	if (!image || !lines) {
-		return new Response(JSON.stringify({ error: 'Bad Request' }), {
-			status: 400,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+		return json({ status: 'error', message: 'Bad Request' }, { status: 400 })
 	}
 
 	try {
 		const imageBuffer = dataURLToBuffer(image)
+		const imageName = `${slugifyString(locals.user.username)}-${slugifyString(Date.now().toString())}.png`
 
-		return new Response(JSON.stringify({ success: true }), {
-			status: 200,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+		const uploadedImage = await locals.bucket.put(imageName, image)
+
+		console.log('uploadedImage')
+		console.log(uploadedImage)
+
+		return json({ status: 'success' })
 	} catch (error) {
 		console.error(error)
-		return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-			status: 500,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+		return json({ status: 'error', message: 'Internal Server Error' }, { status: 500 })
 	}
 }

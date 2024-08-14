@@ -53,10 +53,21 @@
 
 	async function addToBookmarks() {
 		saveText = 'Saving...'
+
 		try {
+			const img = await fetch($generatedImg)
+				.then((res) => res.blob())
+				.then(
+					(blob) =>
+						new Promise((resolve) => {
+							const reader = new FileReader()
+							reader.onloadend = () => resolve(reader.result)
+							reader.readAsDataURL(blob)
+						})
+				)
 			const data = await sendRequest('save', {
 				lines: $lines,
-				image: $generatedImg
+				image: img
 			})
 
 			console.log('lines')
