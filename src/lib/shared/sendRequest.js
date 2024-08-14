@@ -33,6 +33,7 @@ export async function sendRequest(endpoint, obj) {
 	response.message = data.message
 
 	const toast = {
+		ok: response.success,
 		data: data.data || {},
 		message: response.message,
 		background: response.success ? 'variant-filled-primary' : 'variant-filled-warning'

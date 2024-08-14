@@ -43,12 +43,16 @@
 	}
 
 	async function deleteRequest(id, name) {
-		const data = await sendRequest('delete', {
+		const request = await sendRequest('delete', {
 			id,
 			name
 		})
 
-		toastStore.trigger(data)
+		toastStore.trigger(request)
+
+		if (request.ok) {
+			data.bookmarks = data.bookmarks.filter((bookmark) => bookmark.id !== id)
+		}
 	}
 </script>
 

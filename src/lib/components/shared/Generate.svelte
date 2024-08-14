@@ -72,7 +72,7 @@
 			})
 
 			toastStore.trigger(data)
-			saveText = data.background.includes('warning') ? 'Save' : 'Saved'
+			saveText = data.ok ? 'Save' : 'Saved'
 		} catch (error) {
 			console.error('Error saving image:', error)
 		}

@@ -1,5 +1,6 @@
 import { savedTable } from '$lib/server/db/schema'
 import { json } from '@sveltejs/kit'
+import { eq, and } from 'drizzle-orm'
 
 export const POST = async ({ request, locals }) => {
 	const { id, name } = await request.json()
