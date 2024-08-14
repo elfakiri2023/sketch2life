@@ -28,7 +28,7 @@
 		})
 	}
 
-	function deleteImg(id) {
+	function deleteImg(id, name) {
 		modalStore.trigger({
 			type: 'confirm',
 			title: 'Delete Bookmark',
@@ -36,15 +36,16 @@
 			buttonTextConfirm: 'Delete',
 			response: (r) => {
 				if (r) {
-					deleteRequest(id)
+					deleteRequest(id, name)
 				}
 			}
 		})
 	}
 
-	async function deleteRequest(id) {
+	async function deleteRequest(id, name) {
 		const data = await sendRequest('delete', {
-			id
+			id,
+			name
 		})
 
 		toastStore.trigger(data)
@@ -79,7 +80,7 @@
 					<button
 						class="bg-error-400 hover:bg-error-500 p-2 rounded-full m-2"
 						on:click={() => {
-							deleteImg(bookmark.id)
+							deleteImg(bookmark.id, bookmark.image_name)
 						}}
 					>
 						<GeneralIcons name="delete" class="h-6 w-6 text-white" />
