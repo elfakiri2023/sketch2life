@@ -1,15 +1,11 @@
 import { dataURLToBuffer } from '$lib/server/utils'
+import { json } from '@sveltejs/kit'
 
 export const POST = async ({ request, locals }) => {
 	const { img } = await request.json()
 
 	if (!img) {
-		return new Response(JSON.stringify({ error: 'Bad Request' }), {
-			status: 400,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+		return json({ status: 'error', message: 'Bad Request' }, { status: 400 })
 	}
 
 	try {
@@ -23,19 +19,9 @@ export const POST = async ({ request, locals }) => {
 
 		const caption = captionRes.description.replaceAll('"', '').trim()
 
-		return new Response(JSON.stringify({ caption }), {
-			status: 200,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+		return json({ caption })
 	} catch (error) {
 		console.error(error)
-		return new Response(JSON.stringify({ error: 'Internal Server Error' }), {
-			status: 500,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
+		return json({ status: 'error', message: 'Internal Server Error' }, { status: 500 })
 	}
 }

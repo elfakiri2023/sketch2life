@@ -17,7 +17,6 @@ export async function sendRequest(endpoint, obj) {
 
 	if (!request.ok) {
 		response.message = 'Oops! Something went wrong. Please try again later.'
-		return response
 	}
 
 	const data = await request.json()

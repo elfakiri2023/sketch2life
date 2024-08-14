@@ -65,29 +65,14 @@
 							reader.readAsDataURL(blob)
 						})
 				)
+
 			const data = await sendRequest('save', {
 				lines: $lines,
 				image: img
 			})
 
-			console.log('lines')
-			console.log($lines)
-			console.log('image')
-			console.log($imgUrl)
-
-			if (data.success) {
-				toastStore.trigger({
-					message: 'Sketch & Image saved to bookmarks',
-					background: 'variant-filled-primary'
-				})
-				saveText = 'Saved'
-			} else {
-				toastStore.trigger({
-					message: 'Failed to save Sketch & Image to bookmarks',
-					background: 'variant-filled-error'
-				})
-				saveText = 'Save'
-			}
+			toastStore.trigger(data)
+			saveText = data.background.includes('warning') ? 'Save' : 'Saved'
 		} catch (error) {
 			console.error('Error saving image:', error)
 		}
