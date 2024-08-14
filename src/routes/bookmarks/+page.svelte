@@ -4,22 +4,50 @@
 	import { lines } from '$lib/stores/board'
 	import { goto } from '$app/navigation'
 	import { PUBLIC_BUCKET_URL } from '$env/static/public'
+	import { getModalStore, getToastStore } from '@skeletonlabs/skeleton'
+	import Fullscreen from '$lib/components/shared/Fullscreen.svelte'
+	import { sendRequest } from '$lib/shared/sendRequest'
+
+	const modalStore = getModalStore()
+	const toastStore = getToastStore()
 
 	export let data
 
-	console.log(data)
-
 	function editImg(sketch) {
-		console.log('lines: ' + sketch)
-		/* $lines = []
-		goto('/') */
+		$lines = JSON.parse(sketch)
+		setTimeout(() => {
+			goto('/')
+		}, 100)
 	}
 
 	function fullScreen(url) {
-		console.log('image url: ' + url)
+		modalStore.trigger({
+			type: 'component',
+			image: url,
+			component: { ref: Fullscreen }
+		})
 	}
+
 	function deleteImg(id) {
-		console.log('delete img: ' + id)
+		modalStore.trigger({
+			type: 'confirm',
+			title: 'Delete Bookmark',
+			body: 'Are you sure you want to delete this bookmark?',
+			buttonTextConfirm: 'Delete',
+			response: (r) => {
+				if (r) {
+					deleteRequest(id)
+				}
+			}
+		})
+	}
+
+	async function deleteRequest(id) {
+		const data = await sendRequest('delete', {
+			id
+		})
+
+		toastStore.trigger(data)
 	}
 </script>
 
@@ -30,7 +58,7 @@
 	<section class="grid grid-cols-2 md:grid-cols-4 gap-7">
 		{#each data.bookmarks as bookmark}
 			<div class="relative group">
-				<img class="h-auto max-w-full rounded-lg" src={`${PUBLIC_BUCKET_URL}/${bookmark.image_name}`} alt={bookmark.image_name} />
+				<img class="h-auto max-w-full rounded-lg" loading="lazy" src={`${PUBLIC_BUCKET_URL}/${bookmark.image_name}`} alt={bookmark.image_name} />
 				<div class="absolute inset-0 bg-primary-400 bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
 					<button
 						class="bg-primary-400 hover:bg-primary-500 p-2 rounded-full m-2"

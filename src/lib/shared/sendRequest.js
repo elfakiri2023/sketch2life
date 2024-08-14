@@ -5,7 +5,7 @@
  * @returns {Promise<import('@skeletonlabs/skeleton').ToastSettings|Object>}
  */
 export async function sendRequest(endpoint, obj) {
-	let response = { success: false, message: 'Something went wrong!' }
+	let response = { success: false, message: 'Something went wrong!', background: 'variant-filled-error' }
 
 	const request = await fetch(`/api/${endpoint}`, {
 		method: 'POST',
@@ -17,6 +17,7 @@ export async function sendRequest(endpoint, obj) {
 
 	if (!request.ok) {
 		response.message = 'Oops! Something went wrong. Please try again later.'
+		return response
 	}
 
 	const data = await request.json()
