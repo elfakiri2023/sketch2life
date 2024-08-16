@@ -17,6 +17,12 @@ Turn your hand-drawn sketches into stunning, realistic images in just moments us
 -   Captcha: [Turnstile](https://www.cloudflare.com/products/turnstile)
 -   Tests: [Playwright](https://github.com/microsoft/playwright)
 
+## AI Models used:
+
+-   Image to Text: [llava-1.5-7b-hf](https://huggingface.co/llava-hf/llava-1.5-7b-hf)
+-   Text Generation: [Meta-Llama-3.1-8B-Instruct](https://huggingface.co/meta-llama/Meta-Llama-3.1-8B-Instruct)
+-   Text to Image: [Stable-diffusion-xl-base-1.0](https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0)
+
 ## Getting Started
 
 ### 1. Clone the Repository
