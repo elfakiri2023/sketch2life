@@ -15,6 +15,7 @@ Turn your hand-drawn sketches into stunning, realistic images in just moments us
 -   ORM: [Drizzle](https://github.com/drizzle-team/drizzle-or)
 -   Data validation: [Zod](https://github.com/colinhacks/zod)
 -   Captcha: [Turnstile](https://www.cloudflare.com/products/turnstile)
+-   Tests: [Playwright](https://github.com/microsoft/playwright)
 
 ## Getting Started
 
