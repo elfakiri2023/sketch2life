@@ -7,6 +7,9 @@
 	import { getModalStore, getToastStore } from '@skeletonlabs/skeleton'
 	import Fullscreen from '$lib/components/shared/Fullscreen.svelte'
 	import { sendRequest } from '$lib/shared/sendRequest'
+	import { currentPage } from '$lib/stores/general'
+
+	currentPage.set('Bookmarks')
 
 	const modalStore = getModalStore()
 	const toastStore = getToastStore()

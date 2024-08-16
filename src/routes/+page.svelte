@@ -6,6 +6,9 @@
 	import { goto } from '$app/navigation'
 	import { getModalStore } from '@skeletonlabs/skeleton'
 	import Generate from '$lib/components/shared/Generate.svelte'
+	import { currentPage } from '$lib/stores/general'
+
+	currentPage.set('Home')
 
 	const modalStore = getModalStore()
 
