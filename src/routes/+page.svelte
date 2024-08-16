@@ -8,7 +8,7 @@
 	import Generate from '$lib/components/shared/Generate.svelte'
 	import { currentPage } from '$lib/stores/general'
 
-	currentPage.set('Home')
+	currentPage.set('Create')
 
 	const modalStore = getModalStore()
 

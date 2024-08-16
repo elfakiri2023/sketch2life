@@ -10,7 +10,7 @@
 	}
 
 	$: url = `${$page.url.protocol}//${$page.url.host}${$page.url.pathname}`
-	$: title = $currentPage === 'home' ? `${info.title} | ${info.subTitle}` : `${$currentPage} - ${info.title}`
+	$: title = $currentPage === 'Create' ? `${info.title} | ${info.subTitle}` : `${$currentPage} - ${info.title}`
 </script>
 
 <svelte:head>
