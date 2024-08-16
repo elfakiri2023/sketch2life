@@ -1,6 +1,6 @@
 # Sketch 2 Live
 
-Turn your hand-drawn sketches into stunning, realistic images in just moments
+Turn your hand-drawn sketches into stunning, realistic images in just moments using AI
 
 ## Technologies used:
 
