@@ -11,7 +11,7 @@
 		"deploy": "npm run build && npx wrangler pages deploy .svelte-kit/cloudflare --commit-dirty=true --branch=master",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
-		"test": "vitest",
+		"test": "playwright test",
 		"lint": "prettier --check .",
 		"format": "prettier --write .",
 		"db:gen": "drizzle-kit generate",

@@ -16,3 +16,4 @@ vite.config.ts.timestamp-*
 /.wrangler
 package-lock.json
 wrangler.toml
+test-results/.last-run.json
