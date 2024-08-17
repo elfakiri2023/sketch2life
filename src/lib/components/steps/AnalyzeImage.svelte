@@ -19,6 +19,8 @@
 			})
 
 			if (request.ok) {
+				console.log('caption:')
+				console.log(request.data.caption)
 				$caption = request.data.caption
 			} else {
 				toastStore.trigger(request)

@@ -17,6 +17,8 @@
 			})
 
 			if (request.ok) {
+				console.log('prompt:')
+				console.log(request.data.prompt)
 				$prompt = request.data.prompt
 			} else {
 				toastStore.trigger(request)
