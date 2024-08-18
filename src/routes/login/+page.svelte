@@ -9,12 +9,20 @@
 	export let form
 	/** @type {Turnstile} */
 	let turnstileComponent
+
+	function handleKeydown(event) {
+		if (event.key === 'Enter') {
+			event.preventDefault()
+			turnstileComponent.render()
+		}
+	}
 </script>
 
 <div class="flex items-center justify-center mt-20">
 	<div class="card w-full max-w-md p-6 pb-0 mx-2 rounded shadow-lg">
 		<h1 class="text-2xl font-bold mb-6 text-center">Login</h1>
-		<form method="post" use:enhance>
+		<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+		<form method="post" use:enhance on:keydown={handleKeydown}>
 			<div class="mb-4">
 				<label for="username" class="label mb-2 text-sm font-medium">Username</label>
 				<input type="text" name="username" class="input" placeholder="Enter your username" minlength="3" maxlength="24" required />
